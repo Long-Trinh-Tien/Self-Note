@@ -1,0 +1,65 @@
+To use both GNOME and LXQt on the same Alpine Linux system, you need to install both desktop environments and ensure that you can switch between them from the login screen. Below are the steps to install and use GNOME and LXQt simultaneously.
+
+Step 1: Install Xorg and Basic Dependencies
+Before installing the desktop environments, you need to install Xorg and the necessary packages to support a graphical environment.
+
+Install Xorg and basic drivers:
+
+bash
+sudo apk update
+sudo apk add xorg-server xf86-video-vesa xf86-input-evdev xterm
+Step 2: Install GNOME
+Install GNOME and additional components:
+
+bash
+sudo apk add gnome gnome-extra
+Install GNOME Display Manager (GDM) to handle login and use GNOME:
+
+bash
+sudo apk add gdm
+sudo rc-update add gdm default
+sudo rc-service gdm start
+Step 3: Install LXQt
+Install LXQt:
+
+bash
+sudo apk add lxqt
+LXQt is a lightweight and simple desktop environment that requires minimal resources. It’s an excellent option if you want to have a choice between GNOME and LXQt.
+
+Step 4: Install LightDM (or Other Display Manager)
+Both GNOME and LXQt can use different display managers. Since you’ve installed GDM for GNOME, you may opt for LightDM to handle login for LXQt. LightDM is a lightweight display manager compatible with various desktop environments.
+
+Install LightDM:
+
+bash
+sudo apk add lightdm lightdm-gtk-greeter
+Add LightDM to the startup process:
+
+bash
+sudo rc-update add lightdm default
+Restart the LightDM service:
+
+bash
+sudo rc-service lightdm start
+Once this step is complete, you can use LightDM to log in and choose between GNOME and LXQt.
+
+Step 5: Switch Between GNOME and LXQt
+When you restart or log in to the login screen (LightDM or GDM), you will have the option to select the desktop environment between GNOME and LXQt.
+
+Choose GNOME or LXQt:
+
+On the login screen, you can select the desktop environment you want to use. Typically, there will be an icon or menu (like a gear icon or "Session" menu).
+
+Select GNOME to use GNOME, or choose LXQt to use LXQt.
+
+Step 6: Restart and Test
+After completing the steps above, restart the system or log back in. When the login screen appears, you can select your desired desktop environment (GNOME or LXQt).
+
+Summary
+Install Xorg and basic dependencies.
+
+Install both GNOME and LXQt.
+
+Install LightDM or GDM to manage login and switching between desktop environments.
+
+Choose GNOME or LXQt from the login screen.
