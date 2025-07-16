@@ -1,0 +1,50 @@
+Bằng việc tích vào ô “Tôi đồng ý”, Anh/Chị xác nhận “Tôi đã đọc kỹ thông báo này và đồng ý cho phép Công ty Xử lý dữ liệu cá nhân của Tôi theo quy định của Pháp luật về Bảo vệ dữ liệu cá nhân” . Cụ thể như sau:
+By ticking the “I Acknowledge” box, you confirm that “I have read this notice carefully and agree to allow the Company to process my personal data in accordance with the applicable laws on personal data protection.” Specifically:
+
+1. Các loại dữ liệu cá nhân mà Công ty thu thập:
+Types of personal data collected by the Company:
+Thông tin cá nhân cơ bản (họ và tên, ngày sinh, giới tính,…) và các dữ liệu cá nhân nhạy cảm (tôn giáo, thông tin định vị, tình trạng sức khỏe, thông tin định danh, số tài khoản ngân hàng,…) được Anh/Chị cung cấp cho Công ty hoặc được Công ty thu thập được trong quá trình Anh/Chị làm việc tại Công ty.
+Basic personal information (full name, date of birth, gender, etc.) and sensitive personal data (religion, location data, health status, identity information, bank account number, etc.) provided by you or collected by the Company during your employment.
+Dữ liệu ra vào văn phòng, dữ liệu chấm công.
+Office entry/exit data, attendance records.
+Hình ảnh cá nhân dưới dạng hình ảnh, video, phim, bản ghi âm, ghi hình.
+Personal images in the form of photographs, videos, or films, audio recordings, video recording.
+Dữ liệu liên quan đến trình độ học vấn, kinh nghiệm làm việc, đánh giá năng lực và các dữ liệu khác phát sinh hoặc được tạo ra trong quá trình Anh/Chị làm việc tại Công ty thuộc danh mục các dữ liệu quy định tại Điều 2.3 và 2.4 Nghị định 13/2023/NĐ-CP.
+Data related to education background, work experience, performance evaluations, and other data generated or arising during your employment, as specified under Articles 2.3 and 2.4 of Decree 13/2023/NĐ-CP.
+2. Công ty sử dụng dữ liệu cá nhân của Anh/Chị cho mục đích:
+The Company uses your personal data for the following purposes:
+Quản lý hồ sơ nhân sự trong suốt quá trình làm việc tại công ty.
+Managing Human resources information throughout your employment.
+Đảm bảo nghĩa vụ, quyền và lợi ích hợp pháp của nhân viên và Công ty.
+Ensuring legal rights, obligations, and interests of employees and the Company.
+Thực hiện các nghĩa vụ về lao động, bảo hiểm, thuế và các nghĩa vụ, thủ tục pháp lý liên quan.
+Compliance with obligations related to labor, insurance, taxation, and other legal procedures.
+Đánh giá hiệu suất làm việc và phát triển nguồn nhân lực.
+Evaluating work performance and developing human resources.
+Đảm bảo an toàn, an ninh trong khuôn viên và hệ thống công ty.
+Ensuring safety and security within the Company's premises and systems.
+Nâng cao trải nghiệm nhân viên.
+Enhancing employee experience.
+Thực hiện truyền thông nội bộ, xây dựng văn hóa doanh nghiệp.
+Conducting internal communications and building corporate culture.
+Tuân thủ các nghĩa vụ theo quy định pháp luật và yêu cầu từ cơ quan nhà nước có thẩm quyền.
+Complying with legal obligations and requests from competent state authorities.
+3. Ai được quyền Xử lý dữ liệu:
+Who is authorized to process the data:
+Ban Giám Đốc, Trưởng Khối, Quản lý (chỉ dữ liệu của những nhân viên thuộc phạm vi quản lý được giao).
+Board of Directors, Division Heads, and Managers (only for employees under their assigned management).
+Bộ phận Nhân sự.
+Human Resources Department.
+Cơ quan Nhà nước có thẩm quyền khi có yêu cầu bằng văn bản hợp lệ.
+Competent state authorities upon legitimate written request.
+Các bộ phận/cá nhân khác trong Công ty theo phạm vi công việc được giao nhằm thực hiện Mục đích nêu ở mục 2.
+Bên thứ ba được Công ty thuê thực hiện dịch vụ cho Mục đích và đã ký Cam kết không tiết lộ (NDA).
+Third parties contracted by the Company to provide services for the above-stated purposes and who have signed a Non-Disclosure Agreement (NDA).
+Xử lý dữ liệu cá nhân là một hoặc nhiều hoạt động tác động tới dữ liệu cá nhân, như: thu thập, ghi, phân tích, xác nhận, lưu trữ, chỉnh sửa, công khai, kết hợp, truy cập, truy xuất, thu hồi, mã hóa, giải mã, sao chép, chia sẻ, truyền đưa, cung cấp, chuyển giao, xóa, hủy dữ liệu cá nhân hoặc các hành động khác có liên quan.
+Processing of personal data includes one or more activities involving personal data such as: collecting, recording, analyzing, verifying, storing, modifying, disclosing, combining, accessing, retrieving, recovering, encrypting, decrypting, copying, sharing, transmitting, providing, transferring, deleting, destroying personal data, or other related actions.
+
+Công ty cam kết mọi thông tin cá nhân của Anh/Chị sẽ được xử lý một cách an toàn và tuân thủ nghiêm ngặt theo các quy định pháp luật liên quan.
+The Company is committed to ensuring that your personal data will be processed safely and strictly in compliance with relevant legal regulations.
+
+Trường hợp Anh/Chị không đồng ý với các nội dung trên, vui lòng liên hệ Bộ phận Nhân sự để trao đổi rõ hơn về lý do. Trong trường hợp không thể đạt được sự đồng thuận, rất tiếc Công ty sẽ không thể tiếp tục duy trì quyền truy cập hệ thống HCM để đảm bảo tuân thủ các quy định về Bảo vệ dữ liệu cá nhân.
+If you do not agree with the above terms, please contact the Human Resources Department to further discuss your concerns. In case an agreement cannot be reached, the Company regrets to inform you that we will be unable to continue maintaining your access to the HCM system in order to ensure compliance with personal data protection regulations.

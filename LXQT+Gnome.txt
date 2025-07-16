@@ -1,65 +1,66 @@
-To use both GNOME and LXQt on the same Alpine Linux system, you need to install both desktop environments and ensure that you can switch between them from the login screen. Below are the steps to install and use GNOME and LXQt simultaneously.
+Để sử dụng cả GNOME và LXQt trên cùng một hệ thống Alpine Linux, bạn cần cài đặt cả hai môi trường desktop này và đảm bảo rằng bạn có thể chuyển đổi giữa chúng trong màn hình đăng nhập. Dưới đây là các bước để cài đặt và sử dụng đồng thời GNOME và LXQt.
 
-Step 1: Install Xorg and Basic Dependencies
-Before installing the desktop environments, you need to install Xorg and the necessary packages to support a graphical environment.
+Bước 1: Cài đặt Xorg và các phụ thuộc cơ bản
+Trước khi cài đặt môi trường desktop, bạn cần cài đặt Xorg và các gói phần mềm cần thiết để hỗ trợ môi trường đồ họa.
 
-Install Xorg and basic drivers:
-
+Cài đặt Xorg và các driver cơ bản:
 bash
+Copy
 sudo apk update
 sudo apk add xorg-server xf86-video-vesa xf86-input-evdev xterm
-Step 2: Install GNOME
-Install GNOME and additional components:
+Bước 2: Cài đặt GNOME
+Cài đặt GNOME và các thành phần phụ trợ:
 
 bash
+Copy
 sudo apk add gnome gnome-extra
-Install GNOME Display Manager (GDM) to handle login and use GNOME:
+Cài đặt GNOME Display Manager (GDM) để quản lý đăng nhập và sử dụng GNOME:
 
 bash
+Copy
 sudo apk add gdm
 sudo rc-update add gdm default
 sudo rc-service gdm start
-Step 3: Install LXQt
-Install LXQt:
+Bước 3: Cài đặt LXQt
+Cài đặt LXQt:
 
 bash
+Copy
 sudo apk add lxqt
-LXQt is a lightweight and simple desktop environment that requires minimal resources. It’s an excellent option if you want to have a choice between GNOME and LXQt.
+LXQt là một môi trường desktop nhẹ, đơn giản, và ít tài nguyên, rất phù hợp nếu bạn muốn có nhiều lựa chọn giữa GNOME và LXQt.
 
-Step 4: Install LightDM (or Other Display Manager)
-Both GNOME and LXQt can use different display managers. Since you’ve installed GDM for GNOME, you may opt for LightDM to handle login for LXQt. LightDM is a lightweight display manager compatible with various desktop environments.
+Bước 4: Cài đặt LightDM (hoặc Display Manager khác)
+Cả GNOME và LXQt đều có thể sử dụng các Display Manager khác nhau. Vì bạn đã cài đặt GDM cho GNOME, bạn có thể chọn LightDM để hỗ trợ đăng nhập vào LXQt. LightDM là một Display Manager nhẹ và tương thích với nhiều môi trường desktop.
 
-Install LightDM:
+Cài đặt LightDM:
 
 bash
+Copy
 sudo apk add lightdm lightdm-gtk-greeter
-Add LightDM to the startup process:
+Thêm LightDM vào quá trình khởi động:
 
 bash
+Copy
 sudo rc-update add lightdm default
-Restart the LightDM service:
+Khởi động lại dịch vụ LightDM:
 
 bash
+Copy
 sudo rc-service lightdm start
-Once this step is complete, you can use LightDM to log in and choose between GNOME and LXQt.
+Sau khi hoàn tất bước này, bạn có thể sử dụng LightDM để đăng nhập và chọn giữa GNOME và LXQt.
 
-Step 5: Switch Between GNOME and LXQt
-When you restart or log in to the login screen (LightDM or GDM), you will have the option to select the desktop environment between GNOME and LXQt.
+Bước 5: Chuyển đổi giữa GNOME và LXQt
+Khi bạn khởi động lại hoặc đăng nhập vào màn hình đăng nhập (LightDM hoặc GDM), bạn sẽ có lựa chọn chọn môi trường desktop giữa GNOME và LXQt.
 
-Choose GNOME or LXQt:
-
-On the login screen, you can select the desktop environment you want to use. Typically, there will be an icon or menu (like a gear icon or "Session" menu).
-
-Select GNOME to use GNOME, or choose LXQt to use LXQt.
-
-Step 6: Restart and Test
-After completing the steps above, restart the system or log back in. When the login screen appears, you can select your desired desktop environment (GNOME or LXQt).
-
-Summary
-Install Xorg and basic dependencies.
-
-Install both GNOME and LXQt.
-
-Install LightDM or GDM to manage login and switching between desktop environments.
-
-Choose GNOME or LXQt from the login screen.
+Chọn GNOME hoặc LXQt:
+Trên màn hình đăng nhập, bạn có thể chọn môi trường desktop bạn muốn sử dụng. Thông thường, sẽ có một biểu tượng hoặc menu để chọn môi trường desktop (có thể là một biểu tượng bánh răng hoặc menu "Session").
+Chọn GNOME để sử dụng GNOME, hoặc chọn LXQt để sử dụng LXQt.
+Bước 6: Khởi động lại và kiểm tra
+Sau khi đã thực hiện xong các bước trên, khởi động lại hệ thống hoặc đăng nhập lại vào máy.
+Khi màn hình đăng nhập hiển thị, bạn có thể chọn môi trường desktop mong muốn (GNOME hoặc LXQt).
+Tổng kết
+Cài đặt Xorg và các phụ thuộc cơ bản.
+Cài đặt GNOME và LXQt.
+Cài đặt LightDM hoặc GDM để quản lý đăng nhập và hỗ trợ chuyển đổi giữa các môi trường desktop.
+Bạn sẽ có thể chọn giữa GNOME và LXQt từ màn hình đăng nhập.
+Với các bước trên, bạn có thể sử dụng đồng thời cả GNOME và LXQt trên Alpine Linux, và chuyển đổi giữa chúng khi đăng nhập.

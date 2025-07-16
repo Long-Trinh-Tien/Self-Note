@@ -1,0 +1,3 @@
+B1: sử dụng IDA pro để load file exe
+B2: Sau đó F5 để load peseudo code -> đọc hiểu flow
+B3: sử dụng cheat engine hoặc ollygdb để tìm xem địa chỉ nào xử lý việc ta cần patch

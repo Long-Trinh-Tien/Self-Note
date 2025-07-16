@@ -1,4 +1,7 @@
-Build Kernel:
+Copy từ máy 251:
+	scp -J root@ubunu2 long.trinh-tien@192.168.203.169:/prj/soc-sw/local/work/long.trinh-tien/test/WSL2-Linux-Kernel/arch/x86/boot/bzImage .
+
+Build Kernel WSL:
 	make KCONFIG_CONFIG=Microsoft/config-wsl menuconfig
 	CONFIG_USBIP_CORE=y
 	CONFIG_USBIP_VHCI_HCD=y
