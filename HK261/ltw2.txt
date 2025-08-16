@@ -1,0 +1,26 @@
+Tuần 1-3:
+- Hàm for :
+	for ($i = ord('A'); $i <= ord('J'); $i++) {
+		$folders[] = "Homework-" . chr($i) . "-23880249";
+	}
+
+- Hàm ord: Lấy số ascii của 1 chữ/số
+- Biến phải có dấu $ ở đầu
+- Array : $folders[]
+- Nối chữ : sử dụng dấu .
+- Ngẫu nhiên 1 ký tự trong chuỗi: array_rand($folders)
+- Set múi giờ: date_default_timezone_set()
+- Debug:
+	* Hiển thị kiểu dự liệu và các giá trị liên quan: 
+		echo '<pre>'; // Giữ nguyên định dạng cho dễ đọc
+		var_dump($variable); hoặc print_r($variable);
+		echo '</pre>';
+	* Dừng web ngay:
+		die('Error occurred'); // Kết thúc script, hiển thị nội dung
+		// hoặc
+		exit('Error occurred'); // Cũng tương tự
+
+Tuần 4:
+- include/require : nhúng toàn bộ code vào (require = include+die khi không tồn tại file)
+- include_once/require_once : tương tự nhưng chỉ nhúng 1 lần, phù hợp các thư viện
+- Xài thẻ div để thêm include 1 url

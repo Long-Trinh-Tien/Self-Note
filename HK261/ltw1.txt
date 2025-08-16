@@ -1,0 +1,71 @@
+Tuần 2:
+Header:
+- Đổi icon trong header : <link rel="icon" href="/favicon.ico" type="image/x-icon">
+Body:
+- Thẻ div (block element): để gom nhiều thẻ lại
+- Tiêu đề trong body (không xài để làm chữ bự)(block element): <h1></h1>
+	Các cấp thấp hơn là h2 h3,... tới h6
+- Ngắt dòng: <br>
+- Kẻ ngang: <hr>
+- Đoạn văn (block element): <p>
+- Style cho thẻ: color, text-align, font-size, background-color, margin, padding, display(block/inline/flex), width, height, border,... và các style tự định nghĩa trong css
+	<h2 style="color:blue; text-align:center;">Tiêu đề màu xanh căn giữa</h2>
+	<p style="font-size:18px; background-color:#f0f0f0;">Đoạn văn có nền xám và chữ to</p>
+- Kí tự đặc biệt trong thẻ: &nbsp(space), &gt(>), &lt(<), &amp(&), &quot(")
+- Inline element: định dạng 1 phần thay vì toàn bộ
+	<span> giống div, 
+	<a> chèn link <a href="link_here" target="_blank" (để mở web trong tab mới)>
+		Về đầu trang bằng <a>
+			<!-- Đặt ở đầu trang -->
+			<a id(hoặc name)="top"></a>
+
+			<!-- Ở cuối trang hoặc bất kỳ đâu -->
+			<a href="#top">Về đầu trang</a>
+	<strong> in đậm, có ý nghĩa nhấn mạnh(<b> thì không), 
+	<em> in nghiêng(<i> thì không), 
+	<img> hình ảnh <img src="logo.png" alt="Logo">
+	<input> cho nhập data, đặt <label> cho nó, type="checkbox" để tạo check box
+	<button>
+	<textarea> ô nhập nhiều dòng
+
+- Phát sinh chữ ngẫu nhiên: lorem+số chữ. VD lorem5, lorem
+- Giữ nguyên định dạng trong thẻ: <pre></pre>
+- Hiển thị danh sách :
+	- Có thứ tự order list <ol type="A/a/i/1/I">, chứa list items <li>
+	- Không thứ tự unorder list <ul type="round/circle/square/>, chứa list items <li>
+	<ol type="A">
+	  <li>HTML</li>
+	  <li>CSS</li>
+	  <li>JavaScript</li>
+	</ol>
+
+- Thêm bảng:
+	<table>: bắt đầu bảng.
+	border="1": thêm viền cho bảng.
+	<tr>: một hàng trong bảng.
+	<th>: tiêu đề cột (in đậm, canh giữa).
+	<td>: dữ liệu ô trong bảng
+	Ví dụ:
+		<table border="1">
+		  <tr>
+			<th>Họ và tên</th>
+			<th>Tuổi</th>
+			<th>Thành phố</th>
+		  </tr>
+		  <tr>
+			<td>Nguyễn Văn A</td>
+			<td>28</td>
+			<td>Hà Nội</td>
+		  </tr>
+		  <tr>
+			<td>Trần Thị B</td>
+			<td>25</td>
+			<td>Hồ Chí Minh</td>
+		  </tr>
+		</table>
+	Để merge theo hàng hoặc cột thì sử dụng colspan, rowspan
+
+- <nav> để chỉ các thẻ chứa navigation đi nơi khác, chỉ mang ý nghĩa đánh dấu
+- Tạo dropdown list: <select>
+
+- meta tag chứa các biến như #define trong C, ko xài để tính toán
