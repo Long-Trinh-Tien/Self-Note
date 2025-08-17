@@ -69,3 +69,74 @@ Body:
 - Tạo dropdown list: <select>
 
 - meta tag chứa các biến như #define trong C, ko xài để tính toán
+	<meta charset="UTF-8">
+	<meta name="description" content="Our title here">		=> SEO optimization
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+- Tuần 3: Form
+	- Thẻ form:
+	Để nhập data thì ta soạn trong type="text"
+	Hành động khi ấn nút submit sẽ được định nghĩa trong action
+		method: 
+			GET là load data với các phương thức name (vd như dưới là username), gắn trong URL gởi tới trang web trong action
+			POST là gởi data lớn, bảo mật (chưa mã hóa) vào trong phần body của package để tránh log
+	- Thẻ label để tạo 1 label trỏ tới thẻ có id tương ứng
+	- Checkbox thì sử dụng, check box thì chọn 1 hoặc nhiều, `checked` để chọn default
+		<input type="checkbox" id="english" checked><label for="english">English</label> 
+	- Radio box thì sử dụng, chọn 1 trong list các radio box có cùng name, `checked` để chọn default:
+		<input type="radio" id="english" name="language" checked><label for="english">English</label>
+		<input type="radio" id="vietnamese" name="language"><label for="vietnamese">Vietnamese</label>
+	- Nút reset
+		<input type="reset" value="reset">
+	- Thuộc tính `placeholder` là để hiển chữ mờ hướng dẫn user input
+	- Thẻ textarea: cho user input 1 đoạn lớn/nhiều dòng:
+		<textarea name="message" id="" cols="30" rows="10"></textarea>
+	- Thẻ select: xổ danh sách để chọn:
+		<form action="xuly.htm" method="post">
+			<select name="city" id="city">
+				<option value="ny">New York</option>	<!-- sẽ post/get phần value nếu được chọn -->
+				<option value="la">Los Angeles</option>
+				<optgroup label="Europe">				<!-- gom các option chung loại lại với nhau -->
+					<option value="lon">London</option>
+					<option value="par">Paris</option>
+					<option value="ber">Berlin</option>
+				</optgroup>
+
+			</select>
+			<input type="submit" value="Submit">
+		</form>
+	
+	- Thẻ fieldset để đóng khung data:
+		<fieldset> <!-- Use fieldset to group related elements -->
+			<legend>Subject</legend> <!-- Use this inside <fieldset> to describe the group -->
+			<div>
+				<input type="checkbox" name="subject" id="english">
+				<label for="english">English</label>
+			</div>
+			<div>
+				<input type="checkbox" name="subject" id="math">
+				<label for="math">Math</label>
+			</div>
+		</fieldset>
+	
+	- Để tạo nút upload file thì thêm vào:
+		<form action="" method="post" enctype="multipart/form-data">
+			<input type="file" name="fileUpload" id="fileUpload">
+		</form>
+	
+
+<form action="sample.html" method="POST">
+	<div>
+		<label for="username">Username:</label> <input type="text" name="username" id="username(just use to point to this tag)" placeholder="Enter your username">
+	</div>
+
+	<div>
+		<label for="password">Password:</label> <input type="password" name="password" id="password">
+	</div>
+	<input type="submit" value="Login"> <!-- nút này xài để post toàn bộ nội dung trong thẻ form -->
+
+	<div>
+		<textarea name="message" id="" cols="30" rows="10"></textarea>
+	</div>
+</form>
+
