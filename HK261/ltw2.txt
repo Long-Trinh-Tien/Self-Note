@@ -24,3 +24,26 @@ Tuần 4:
 - include/require : nhúng toàn bộ code vào (require = include+die khi không tồn tại file)
 - include_once/require_once : tương tự nhưng chỉ nhúng 1 lần, phù hợp các thư viện
 - Xài thẻ div để thêm include 1 url
+
+Tuần 5: 5.1 Mảng
+- Khai báo mảng tường minh (optional): $arr = array();
+- Thành phần của mảng chưa được gán giá trị thì nó sẽ là : undefined
+- Index của array có thể là string (giống key:value trong python)
+- Count($arr): tính số phần tử để lặp
+- foreach($arr as $index->$value): từ đây có thể xử lý tiếp với index (có thể là chữ) và value
+		5.2 Truyền nhận dữ liệu
+- Truyền qua URL: www.google.com/search?var1=value1&var2=value2.....
+	Lấy dữ liệu trên thì xài $_GET["var1"]
+- Truyền qua form của web
+	Với loại radio thì khi check nó sẽ đánh dấu value là A12, ko check thì trống
+	Method là GET (form+URL) thì xài $_GET["name"] để lấy
+	Method là POST (form) thì xài $_POST["name"] để lấy
+	Không rõ method ->$_REQUEST để lấy (hạn chế)
+	
+- Luôn kiểm tra biến có được input chưa trước khi xử lý:
+	# Set default value
+	$var = "default value";
+
+	if( isset( $_POST["name"] ) == true ) {
+		$var = $_POST["name"];
+	}
