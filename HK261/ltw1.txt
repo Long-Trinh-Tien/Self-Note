@@ -125,18 +125,18 @@ Body:
 		</form>
 	
 
-<form action="sample.html" method="POST">
-	<div>
-		<label for="username">Username:</label> <input type="text" name="username" id="username(just use to point to this tag)" placeholder="Enter your username">
-	</div>
+	<form action="sample.html" method="POST">
+		<div>
+			<label for="username">Username:</label> <input type="text" name="username" id="username(just use to point to this tag)" placeholder="Enter your username">
+		</div>
 
-	<div>
-		<label for="password">Password:</label> <input type="password" name="password" id="password">
-	</div>
-	<input type="submit" value="Login"> <!-- nút này xài để post toàn bộ nội dung trong thẻ form -->
+		<div>
+			<label for="password">Password:</label> <input type="password" name="password" id="password">
+		</div>
+		<input type="submit" value="Login"> <!-- nút này xài để post toàn bộ nội dung trong thẻ form -->
 
-	<div>
-		<textarea name="message" id="" cols="30" rows="10"></textarea>
-	</div>
-</form>
+		<div>
+			<textarea name="message" id="" cols="30" rows="10"></textarea>
+		</div>
+	</form>
 
