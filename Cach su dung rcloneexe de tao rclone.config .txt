@@ -1,0 +1,6 @@
+Để sử dụng rclone thì cần rclone browser và rclone.config
+* cách tạo rclone.config
+B1: vào thư mục chứa rclone.exe, ấn vào thanh directory bar, nhập cmd, enter
+B2: gõ 'rclone config'
+B3: chỉnh config
+B4: Nhận hàng ở C:\Users\ASUS\AppData\Roaming\rclone
