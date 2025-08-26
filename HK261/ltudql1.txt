@@ -1,0 +1,20 @@
+Tuần 1-4:
+- Public Class Form1 ... End Class → Khai báo lớp Form1 (form giao diện chính).
+- Private Sub ... Handles ... → Thủ tục xử lý sự kiện (event handler), ví dụ: Handles BDong.Click chạy khi bấm nút BDong.
+- Dim a, b, c As Double → Khai báo nhiều biến kiểu số thực trên cùng một dòng.
+- Dim hople As Boolean → Biến kiểu logic (True/False).
+- Double.TryParse(TBA.Text, a) → Chuyển chuỗi sang số thực, trả về True nếu thành công.
+- If ... Then ... ElseIf ... Else ... End If → Cấu trúc rẽ nhánh điều kiện.
+- ByRef → Tham số truyền tham chiếu, giá trị thay đổi trong hàm sẽ ảnh hưởng ra ngoài.
+- String.Format("...", x1, x2) → Chèn giá trị biến vào chuỗi theo định dạng {0}, {1}.
+- Math.Sqrt(delta) → Hàm căn bậc hai.
+
+- Khi tạo button, Text là hiển thị, Name mới là tên biến, double click vào sẽ hiển thị hàm để code
+
+Tuần 5:
+- Để code cho 1 sự kiện (của 1 button), chọn properties, chọn đúp vào sự kiện (vd FormClosing) -> gen code
+	Dim dr as DialogResult	= MessageBox.Show("Do u wanna close","Title",MessageBoxButtons.OKCancel)
+	If dr == DialogResult.Cancel Then
+		e.Cancel = True
+	End If
+- Chọn Designer.vb để xem design của form
