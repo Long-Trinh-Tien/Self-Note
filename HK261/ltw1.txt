@@ -140,3 +140,42 @@ Body:
 		</div>
 	</form>
 
+Tuần 4: CSS
+- Có 3 loại : 
+	inline, nhúng vào web (internal) và link tới web (external)
+	External : <link rel="stylesheet" href="css.css">
+
+- Thẻ style trong html: định dạng theo thẻ. Chỉ xài khi nhúng css vào
+	<style>
+	h1	{
+		color:green;
+	{
+	</style>
+
+- Các định dạng trong css:
+	h1 như trên: định dạng h1:
+	h1	{
+		color:green;
+	{
+	
+	Tag:  #		- 1 tag không nên gắn cho nhiều thẻ, nếu cần thì xài class
+		Trong css: 
+			#firstTag{
+				color:green;
+			{
+		Trong html:
+			<div id=firstTag>Thẻ này được định dạng màu green theo css</div>
+
+	Class: .	- sử dụng để gom nhóm các thẻ html có cùng css
+		Trong css: 
+			.firstClass{
+				color:green;
+			{
+		Trong html:
+			<div class=firstClass>Thẻ này được định dạng màu green theo css</div>
+
+	Đối tượng cụ thể có thuộc tính class (vd thẻ h1 với class là firstClass): h1.firstClass
+	Đối tượng cụ thể có đối tượng con chứa class (vd thẻ h1 là cha, class của con là firstClass): h1 .firstClass
+	
+	Hover: a.hover định nghĩa khi ta di chuột vào
+	First letter: định nghĩa size chữ cho kí tự đầu
