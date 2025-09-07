@@ -177,5 +177,26 @@ Tuần 4: CSS
 	Đối tượng cụ thể có thuộc tính class (vd thẻ h1 với class là firstClass): h1.firstClass
 	Đối tượng cụ thể có đối tượng con chứa class (vd thẻ h1 là cha, class của con là firstClass): h1 .firstClass
 	
+	Type: input[type="submit"]
+	
 	Hover: a.hover định nghĩa khi ta di chuột vào
 	First letter: định nghĩa size chữ cho kí tự đầu
+	
+	Nguyên lý định dạng trong CSS đọc từ phải qua trái:
+		#content h1 : thẻ h1 nằm trong 1 thẻ cha có tag là content
+		h1#content: thẻ có tag là content nằm trong h1
+		ul.menu li a{}:thẻ a trong thẻ li trong thẻ ul có class là menu
+			<ul class="menu">
+			  <li><a href="#">Giới thiệu về chúng tôi</a></li>
+			  <li><a href="#">Giới thiệu về bạn</a></li>
+			  <li><a href="#">Giới thiệu chung</a></li>
+			</ul>
+		div a:Chọn tất cả thẻ <a> nằm bên trong bất kỳ thẻ <div> nào (dù là con trực tiếp hay gián tiếp)
+		div + a:Chọn thẻ <a> ngay sau một thẻ <div> (phải là anh em liền kề).
+			<div></div>
+			<a href="#">Liên kết kế bên div</a>
+		div > a:Chọn thẻ <a> là con trực tiếp của thẻ <div>.
+
+
+	Định dạng tất cả các thẻ: *{...}  
+	Thêm từ khóa !important thì sẽ override tất cả bất kể level

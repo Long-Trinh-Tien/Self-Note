@@ -1,0 +1,25 @@
+Window + linux
+- Tải ventoy (bản mới nhất, nếu lỗi thì có thể do USB fake dung lượng, thử lại với bản dưới):
+	https://archive.org/download/SOFTWARE-BACKUP-TMY/ventoy-1.0.42-windows.zip
+- Cài vào usb
+- Mount usb vào /mnt
+- Boot vào ubuntu: sudo grub-install --target=i386-pc --boot-directory=/mnt/ /dev/sdX
+- Tạo /mnt/grub/grub.cfg
+	set root=(hd1,msdos5)
+	set prefix=(hd1,msdos5)/boot/grub
+	insmod normal
+	normal
+-> để grub của ubuntu có sẵn xử lý tiếp
+
+Chạy command 
+
+Window
+	grub-install.exe --target=i386-pc --boot-directory=H:\boot H:
+	Vào H:\boot\grub\grub.cfg
+		set root=(hd1,msdos5)
+		set prefix=(hd1,msdos5)/boot/grub
+		insmod normal
+		normal
+
+
+PS C:\Users\Admin\Downloads\Linux\grub-2.12~rc1-for-windows> .\grub-install.exe --target=i386-pc --install-modules="biosdisk part_msdos ext2 linux normal configfile" --boot-directory=D:\boot \\.\PhysicalDrive1 -v
