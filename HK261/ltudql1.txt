@@ -18,3 +18,6 @@ Tuần 5:
 		e.Cancel = True
 	End If
 - Chọn Designer.vb để xem design của form
+
+Tuần 8:
+- (Name) properties sẽ là tên biến
