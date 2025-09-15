@@ -26,121 +26,164 @@ chrome://inspect/#devices
 
 - string to json: JSON.parse()
 
-undoMessage(t) {
-	const n = T.default.getInstance();
-	return new Promise(((a, s) => {
-		const {
-			toUid: i,
-			fromUid: o,
-			cliMsgId: r
-		} = t;
-		let c = t.msgId;
-		this.getMessagesInTransaction(c, r + "", i, o, t.key).then((r => {
-			const {
-				msgIds: d = [],
-				msg: A = null
-			} = r || {};
-			if (A) {
-				J.zsymb(3, "N3_PRM", ["{} [undoMessage] found msg for {}", "v0t3oH"], ae, c), c = A.msgId;
-				const r = t.cliMsgId + "",
-					d = {
-						fromUid: o,
-						msgId: c,
-						cliMsgId: r,
-						toUid: i
-					},
-					h = e => -1 != o ? !!Object(x.a)(e, d) || this.isQuoteEqual(e, d) : e.msgId === c || e.quote && e.quote.globalMsgId + "" === c || e.quote && r && e.quote.cliMsgId === r,
-					m = (t, s) => {
-						for (let a of t) {
-							if (a.msgId === c) {
-								if (this.deleteMessageResourceIfExists(a), this.FileUtils && a.msgType === u.MSG_FILE && a.message && a.message.href) {
-									let e = this.FileUtils.getDownloadKey(a);
-									this.FileUtils.cancelDownload(e)
-								}
-								a.msgType = u.MSG_UNDO, a.originMsgType = "chat.undo", "0" !== a.fromUid && (a = v.default.convertToRecalled(a)), Object(L.f)(a) !== u.MSG_E2EE_PENDING && Object(L.f)(a) !== u.MSG_E2EE_FAILED || (a.e2eeStatus = u.MSG_E2EE_UNDO);
-								if (E.a.getInstance().deleteMessage(a.msgId, a), Object(H.a)()) {
-									let t = "unknown";
-									Object(K.isPhotoOrVideoMessage)(a) ? t = "image" : Object(K.isFileMessage)(a) ? t = "file" : Object(K.isLinkMessage)(a) && (t = "link"), U.ModuleContainer.resolve(j.a).deleteMediasById(t, a.toUid, {
-										newId: a ? `${a.cliMsgId}_${a.fromUid}_${a.toUid}` : void 0,
-										oldId: a.msgId
-									}).catch((t => {
-										J.zsymb(21, "2i40xJ", ["{} [handleUndoMessage] delete media err: {}", "xF7liU"], ae, e)
-									}))
-								} else {
-									const e = [n.Core.Image, n.Core.File, n.Core.Link, n.Core.Notifications];
-									for (let t = 0; t < e.length; t++) e[t].delete(c).catch((n => {
-										this._pendingActions(n, e[t].name, "delete", [c])
-									}))
-								}
-								if (a.staredDttm) {
-									const e = async ({
-										msgId: e,
-										staredDttm: t
-									}, n = T.default.getInstance().Core.StarMessage) => {
-										const a = l.default.getTsStarMsgSchemaChanged();
-										if (t && t >= a) n.delete(e);
-										else {
-											let t = e;
-											await n.get(e) || (t = parseInt(e)), n.delete(t)
-										}
-									};
-									e({
-										msgId: a.msgId,
-										staredDttm: a.staredDttm
-									}, n.Core.StarMessage).catch((e => {
-										J.zsymb(21, "ivrKOq", ["{} [handleDeleteEveryone] delete star msg in store err: {}", "SiNuwb"], ae, e)
-									})), delete a.staredDttm
-								}
-								n.Core.Mention.delete(parseInt(c)).catch((e => {
-									this._pendingActions(e, n.Core.Mention.name, "delete", [parseInt(c)])
-								}));
-								let t = a.sendDttm;
-								n.Core.Notifications.delete(parseInt(t)).catch((e => {
-									this._pendingActions(e, n.Core.Notifications.name, "delete", [parseInt(t)])
-								})), s = a
-							} else this.isQuoteEqual(a, s) && (a.quote.cliMsgType = u.MSG_UNDO, a.quote.msg = "[Tin nhắn đã được thu hồi]");
-							const t = q.a.now();
-							n.Core.Message.insert(a, {
-								replace: !0
-							}).catch((e => {
-								this._pendingActions(e, n.Core.Message.name, "insert", [a, {
-									replace: !0
-								}])
-							})).then((() => {
-								Object(Y.b)().logInfo(Y.a.StoreMessage, {
-									duration: q.a.now() - t,
-									action_name: "replaceMsg",
-									message_size: 1
-								})
-							}))
+- Hàm IIFE search full path tới `this` (tạo scope riêng): (nhập vào console)
+	(() => {
+		const target = this._onData;
+
+		const deepTrace = (obj, path = "window", visited = new WeakSet()) => {
+			if (visited.has(obj)) return;
+			visited.add(obj);
+
+			for (let key in obj) {
+				try {
+					const val = obj[key];
+					const fullPath = `${path}.${key}`;
+					if (val === target) {
+						console.log("🔍 Found at", fullPath);
+					} else if (typeof val === "object" && val !== null) {
+						deepTrace(val, fullPath, visited);
+					}
+				} catch (e) {}
+			}
+		};
+
+		deepTrace(window);
+	})();
+
+Tampermonkey script:
+https://github.com/Tampermonkey/tampermonkey/issues/2384
+	- Send to telegram:
+		// ==UserScript==
+		// @name         Zalo to Telegram
+		// @namespace    http://tampermonkey.net/
+		// @version      1.0
+		// @description  Gửi tin nhắn từ Zalo sang Telegram
+		// @match        https://chat.zalo.me/*
+		// @grant        GM_xmlhttpRequest
+		// @grant        unsafeWindow
+		// @connect      api.telegram.org
+		// @sandbox     JavaScript
+		// ==/UserScript==
+
+		(function() {
+			'use strict';
+
+			const BOT_TOKEN = "";
+			const CHAT_ID = "";
+
+			window.addEventListener("message", function(event) {
+				if (event.data?.type === "ZALO_DATA") {
+					const a = event.data.payload;
+					const content = a?.data?.msgs?.[0]?.content || "[Không có nội dung]";
+					const sender = a?.data?.msgs?.[0]?.dName || "Unknown";
+
+					const text = `💬 Tin nhắn từ ${sender}:\n${content}`;
+
+					GM_xmlhttpRequest({
+						method: "POST",
+						url: `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded"
+						},
+						data: `chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`,
+						onload: function(response) {
+							console.log("✅ Gửi Telegram:", response.responseText);
+						},
+						onerror: function(err) {
+							console.error("❌ Lỗi gửi:", err);
 						}
-						return a(s), s
-					},
-					g = e => {
-						const t = {
-								from: [i, e.sendDttm, e.msgId],
-								to: [i, $, Z],
-								excludeFrom: !1,
-								excludeTo: !1
-							},
-							a = {
-								index: "userId_sendDttm_msgId",
-								direction: R.c.NEXT,
-								limit: 500,
-								partition: i,
-								useLGKeyRange: !0
-							};
-						n.Core.Message.getAll(t, a).then((t => {
-							let n = [];
-							if (t && t.length)
-								for (let e of t) e && h(e) && n.push(e);
-							return m(n, e)
-						})).catch(s)
-					};
-				g(A), A.msgId && this.previewDataManager.onUndoMessage("server", A)
-			} else J.zsymb(3, "juHYXU", ["{} [undoMessage] cant find msg for {}", "tdEe3a"], ae, c), s("invalid msg")
-		})).catch((e => {
-			J.zsymb(3, "rPkEXz", ["{} [undoMessage] find msg for {} err: {}", "NEyXw_"], ae, c, e), s(e)
-		}))
-	}))
-}
+					});
+
+				}
+			});
+		})();
+
+	- Patch chat.zalo.me chặn undo và gởi message tới tele:
+		// ==UserScript==
+		// @name         New 2
+		// @namespace    http://tampermonkey.net/
+		// @version      2025-09-12
+		// @description  try to take over the world!
+		// @author       You
+		// @match        https://chat.zalo.me/*
+		// @run-at       document-start
+		// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+		// @grant        none
+		// ==/UserScript==
+
+		(function() {
+			'use strict';
+
+			// Khôi phục console.log gốc để tránh bị web override
+			const iframe = document.createElement('iframe');
+			document.body.appendChild(iframe);
+			console.log = iframe.contentWindow.console.log.bind(window.console);
+
+
+			function restoreConsole() {
+				const iframe = document.createElement('iframe');
+				document.body.appendChild(iframe);
+				console.log = iframe.contentWindow.console.log.bind(window.console);
+			}
+
+			function hookSocket(socketObj) {
+				if (!socketObj || typeof socketObj._onData !== 'function') return;
+				console.log("🎯 Hooking _onData on", socketObj);
+
+				const orig = socketObj._onData;
+				socketObj._onData = function(e, t, n, a) {
+					console.log("a =", a);
+					try {
+						let parsed = a;
+						let isString = false;
+
+						if (typeof a === "string") {
+							parsed = JSON.parse(a);
+							isString = true;
+						}
+						//if (typeof a === "string") parsed = JSON.parse(a);
+
+						if (
+							parsed?.data?.msgs &&
+							parsed.data.msgs.some(msg => msg.msgType === "chat.undo")
+						) {
+							console.log("⏩ Bỏ qua xử lý vì msgType = chat.undo");
+							parsed.data.msgs[0].msgType = "chat.undo_fake";
+
+							// Gửi nội dung ra ngoài qua postMessage
+							window.postMessage({
+								type: "ZALO_DATA",
+								payload: parsed
+							}, "*");
+
+							// Nếu ban đầu là string → stringify lại để thay thế trong a
+							if (isString) {
+								a = JSON.stringify(parsed);
+							} else {
+								a = parsed;
+							}
+
+							return orig.apply(this, [e, t, n, a]); // Không gọi hàm gốc
+						}
+					} catch (err) {
+						console.warn("Lỗi khi check a:", err);
+					}
+					return orig.apply(this, [e, t, n, a]);
+				};
+			}
+
+			// Đợi tới khi object xuất hiện rồi hook
+			function waitForSocket() {
+				const target = window.$$afmc?.socketPolling?._chatHandler?._socket;
+				if (target && typeof target._onData === 'function') {
+					hookSocket(target);
+				} else {
+					setTimeout(waitForSocket, 50);
+				}
+			}
+
+			waitForSocket();
+
+
+
+		})();
