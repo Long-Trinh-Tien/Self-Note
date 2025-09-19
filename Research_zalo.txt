@@ -50,6 +50,25 @@ chrome://inspect/#devices
 		deepTrace(window);
 	})();
 
+- Với zalo pc thì patch như này:
+	default-login-main-startup-shared-worker-znotification.b65af72f3439d0f838c9.js:
+	async _onData(e, t, n, a) {
+		let tmp = JSON.parse(a);
+		if (tmp?.data?.msgs?.[0]?.msgType === "chat.undo") {
+			tmp.data.msgs[0].msgType = "chat.undo_fake";
+			a = JSON.stringify(tmp);
+		}
+		const s = this._getDataHanlder(e, t);
+		if (!s) return void this._submitSentry("unsupported cmd " + e);
+		let i = null;
+		try {
+			i = s.preParseData(a)
+		} catch (o) {
+			return this._submitSentry("error on parsing data " + o), void this._onDataError(_.c.CANNOT_PARSE)
+		}
+		0 === i.error_code ? s.onData(e, t, i) : this._onDataError(i.error_code)
+	}
+
 Tampermonkey script:
 https://github.com/Tampermonkey/tampermonkey/issues/2384
 	- Send to telegram:
@@ -187,3 +206,138 @@ https://github.com/Tampermonkey/tampermonkey/issues/2384
 
 
 		})();
+
+- Phương pháp mà zalo decrypt key:
+	from base64 import b64decode
+	from Crypto.Cipher import AES
+	import gzip
+	from io import BytesIO
+
+	def b64_to_bytes(s: str) -> bytes:
+		"""Chuyển đổi chuỗi Base64 sang bytes."""
+		return b64decode(s)
+
+	def decrypt_aes_128_gcm(base64_data: str, key: bytes) -> bytes:
+		"""Giải mã dữ liệu bằng AES-128-GCM."""
+		raw = b64_to_bytes(base64_data)
+		iv = raw[:16]
+		aad = raw[16:32]
+		ciphertext = raw[32:-16]
+		tag = raw[-16:]
+
+		cipher = AES.new(key, AES.MODE_GCM, nonce=iv)
+		cipher.update(aad)
+		plaintext = cipher.decrypt_and_verify(ciphertext, tag)
+		return plaintext
+
+	def decrypt_and_decompress(enc_base64: str, key_base64: str) -> str:
+		"""Giải mã và giải nén dữ liệu từ Zalo WebSocket."""
+		try:
+			key = b64_to_bytes(key_base64)
+			decrypted_bytes = decrypt_aes_128_gcm(enc_base64, key)
+			with gzip.GzipFile(fileobj=BytesIO(decrypted_bytes)) as f:
+				decompressed = f.read()
+			return decompressed.decode('utf-8')
+		except Exception as e:
+			return f"❌ Decrypt failed: {e}"
+
+	# === Ví dụ sử dụng ===
+	if __name__ == "__main__":
+		key_base64 = 's5UdtUr2zLeLFPEe5IKUHw=='
+		enc_base64 = 'FPRBtuqciMaFEm7DQ2dGq1uMugkqNe6B60zYc98ZFb/6YzLvOTeJFxldbKKtkUtmQuKYZ4hS1r0fxmaw1riS8Z8ZwAx/c3G1lRY/YPc5r0tlpsGUyNIPgoLT6Ecl2yWg5506zX1Dmhmn67Uj5BqlUubjDnN9WdtoAnlwt3RGGeV7btBWhkKTgkkzzbJgbrdu58eGJlBJregkNpPA8238/4jTJhYvLZLLKK99VoCrkkQT36doPyWGUKt18XWoVPanDBuSCkVW7/09c7wILpvVYDCIfhnJHBN4i/v8zQGhOnqCyNYk1amfEVA52+N3WSEPojtp/nObep4='
+
+		result = decrypt_and_decompress(enc_base64, key_base64)
+		print("✅ Final content:", result)
+
+- kết hợp với mitm để xem log realtime:
+	from mitmproxy import ctx, http
+	from base64 import b64decode
+	from Crypto.Cipher import AES
+	import gzip
+	from io import BytesIO
+	import json
+
+	# Biến toàn cục để lưu trữ key giải mã
+	_cipher_key = None
+
+	def websocket_message(flow: http.HTTPFlow):
+		# Chỉ xử lý nếu flow này là WebSocket
+		if flow.websocket is None:
+			return
+
+		# Lấy tin nhắn cuối cùng
+		msg = flow.websocket.messages[-1]
+		direction = "Client → Server" if msg.from_client else "Server → Client"
+
+		try:
+			# Thử decode tin nhắn thành văn bản
+			text = msg.content.decode("utf-8", errors="replace")
+			
+			# Convert to json
+			json_start = msg.content.find(b'{')
+			json_bytes = msg.content[json_start:]
+			json_str = json_bytes.decode('utf-8')
+			data = json.loads(json_str)
+
+			global _cipher_key
+
+			# Cập nhật key nếu có
+			if "key" in data:
+				_cipher_key = data["key"]
+				ctx.log.info(f"[WS] Key updated: {data['key']}")
+
+			# Nếu có dữ liệu mã hóa, tiến hành giải mã và giải nén
+			if "data" in data and _cipher_key:
+				encrypted_data = data["data"]
+				try:
+					decrypted_content = decrypt_and_decompress(encrypted_data, _cipher_key)
+					ctx.log.info(f"[WS] {direction} | Decrypted Data: {decrypted_content}")
+				except Exception as e:
+					ctx.log.error(f"[WS] {direction} | Decrypt failed: {e}")
+					
+		except json.JSONDecodeError:
+			# Nếu không phải JSON, in ra nội dung thô
+			ctx.log.info("=====DEBUG-NOTHING=====")
+			# Thử decode tin nhắn thành văn bản
+			text = msg.content.decode("utf-8", errors="replace")
+			json_start = msg.content.find(b'{')
+			json_bytes = msg.content[json_start:]
+			json_str = json_bytes.decode('utf-8')
+			data = json.loads(json_str)
+			# Thử parse JSON
+			#data = json.loads(text)
+			ctx.log.info("v=====DEBUG=====")
+			ctx.log.info(f"Received message content: {repr(data)}")
+			ctx.log.info("^=====DEBUG=====")
+			#ctx.log.info(f"[DEBUG] {direction}: {repr(msg.content.data)}")
+			ctx.log.info(f"[WS] {direction}: {repr(msg.content)}")
+		except Exception as e:
+			ctx.log.error(f"[WS] {direction} | Unexpected error: {e}")
+
+	def b64_to_bytes(s: str) -> bytes:
+		"""Chuyển đổi chuỗi Base64 sang bytes."""
+		return b64decode(s)
+
+	def decrypt_aes_128_gcm(base64_data: str, key: bytes) -> bytes:
+		"""Giải mã dữ liệu bằng AES-128-GCM."""
+		raw = b64_to_bytes(base64_data)
+		iv = raw[:16]
+		aad = raw[16:32]
+		ciphertext = raw[32:-16]
+		tag = raw[-16:]
+
+		cipher = AES.new(key, AES.MODE_GCM, nonce=iv)
+		cipher.update(aad)
+		plaintext = cipher.decrypt_and_verify(ciphertext, tag)
+		return plaintext
+
+	def decrypt_and_decompress(enc_base64: str, key_base64: str) -> str:
+		"""Giải mã và giải nén dữ liệu từ Zalo WebSocket."""
+		try:
+			key = b64_to_bytes(key_base64)
+			decrypted_bytes = decrypt_aes_128_gcm(enc_base64, key)
+			with gzip.GzipFile(fileobj=BytesIO(decrypted_bytes)) as f:
+				decompressed = f.read()
+			return decompressed.decode('utf-8')
+		except Exception as e:
+			return f"❌ Decrypt failed: {e}"
