@@ -202,4 +202,130 @@ Tuần 4: CSS
 	Thêm từ khóa !important thì sẽ override tất cả bất kể level
 
 Tuần 5: 1 số thuộc tính của CSS:
-	text-align: right/left(default)/center/justify
+	- Text
+		- Căn dòng: text-align: right/left(default)/center/justify hoặc nhúng vào inline: <div style=text-align:ight/left(default)/center/justify>
+
+		- Style cho chữ: text-decoration:none(dùng để xóa đường gạch dưới của hyperlink)/underline/overline/line-though/blink
+
+		- Định nghĩa độ lệch dòng đầu tiên: text-indent: 50px (tức 50 pixel)/ 1em (kích thước mặc định của font trong trình duyệt, định nghĩa bằng font-size
+
+	- List
+		- Định nghĩa các gạch đầu dòng: list-style-type: disc(default)/circle/square (ko thứ tự)/ decimal/uper-roman/lower-roman/upper-latin/lower-latin (có thứ tự)
+		- Định nghĩa các gạch đầu dòng sử dụng các hình custom: list-style-image: url('enter url image here')
+		- Định nghĩa vị trí của gạch đầu dòng sẽ nằm trong hay ngoài paragraph: list-style-position: inside/outside(default)
+
+	- Link (pseudo-class cho thẻ <a>):
+		a:link → Liên kết chưa được truy cập.
+		a:visited → Liên kết đã được truy cập.
+		a:hover → Khi rê chuột lên liên kết.
+		a:active → Khi liên kết đang được nhấn.
+		Sau đó thêm thuộc tính như color, background cho các thẻ trên để định nghĩa cho thẻ a
+
+	- Table mẫu
+	table {
+		width : 100%;
+		background-color : green;
+		border: 1px solid red; (kẻ đường border cho cả bảng) (border: [độ_dày] [kiểu_viền] [màu_viền];, thứ tự nào cũng được)
+
+	}
+	td {
+		border: 1px solid red; (kẻ đường border cho từng ô)
+		height: 30px;
+
+	}
+
+		- border-spacing
+			Chức năng: Xác định khoảng cách giữa các ô trong bảng.
+			Điều kiện: Chỉ có tác dụng khi border-collapse: separate (default).
+			Đơn vị: px, em, rem…
+			Ví dụ: border-spacing: 10px 20px; → khoảng cách ngang 10px, dọc 20px.
+
+		- border-collapse
+			Chức năng: Quy định cách hiển thị đường viền giữa các ô.
+			Giá trị:
+			separate (mặc định): Đường viền của mỗi ô tách biệt, có thể dùng border-spacing.
+			collapse: Gộp đường viền chung giữa các ô (không dùng được border-spacing).
+
+		- border(-top/-right/-bottom/-left)-style:
+			none	Không có đường viền.
+			solid	Đường viền liền nét.
+			dashed	Đường viền nét đứt.
+			dotted	Đường viền chấm tròn.
+			double	Đường viền đôi.
+			groove	Đường viền khắc chìm (3D).
+			ridge	Đường viền nổi (3D).
+			inset	Đường viền chìm vào trong.
+			outset	Đường viền nổi ra ngoài.
+
+		- text-align
+			Chức năng: Căn lề ngang nội dung bên trong ô (<td> hoặc <th>).
+			Giá trị: left/center/right
+
+		- vertical-align
+			Chức năng: Căn lề dọc nội dung bên trong ô.
+			Giá trị: top/middle/bottom
+
+
+	- Box model:
+		Inline elements:
+			<span> → bọc nội dung để style hoặc JS, không có ý nghĩa ngữ nghĩa.
+			<b> → in đậm hình thức, không thêm ý nghĩa.
+			<em> → nhấn mạnh ngữ nghĩa, mặc định in nghiêng.
+		Block elements: h1, div, p, ul, li,...
+
+		div {
+		  width: 100px;              /* chiều rộng phần Content */
+		  height: 100px;             /* chiều cao phần Content */
+		  margin(thêm -left/-right/... để set riêng 1 góc): 5px;               /* khoảng cách bên ngoài hộp */
+		  border: 10px solid red;    /* viền đỏ dày 10px */
+		  padding: 20px;             /* khoảng cách từ nội dung đến viền */
+		  /* padding: 20px 10px; là 20px cho top-bottom, 10px cho left-right */
+		  /* padding: 20px 10px 5px; là 20px cho top, 10px cho left-right, 5px cho bottom */
+		  /* padding: 20px 10px 5px 1px; là 20px cho top, 10px cho right, 5px cho bottom, 1px cho left - theo chiều kim đồng hồ */
+		  /* Tổng chiều ngang = width + margin*2 + border*2 + padding*2 */
+		  /* Tổng chiều cao = height + margin*2 + border*2 + padding*2 */
+		  /* Để chia đều theo chiều ngang/dọc dynamically thì thay width =100%/<số lượng hàng/dọc> */
+		}
+		Giải thích từng lớp trong Box Model
+			Content (Nội dung)
+				Kích thước: 100px × 100px
+				Đây là phần trung tâm, nơi chứa văn bản, hình ảnh hoặc các phần tử con.
+		Padding (Đệm)
+			20px ở tất cả các phía.
+			Tạo khoảng trống giữa nội dung và viền(border).
+			Tổng kích thước phần content + padding:
+				Chiều rộng: 100 + 20 + 20 = 140px
+				Chiều cao: 100 + 20 + 20 = 140px
+		Border (Viền)
+			10px màu đỏ bao quanh.
+			Tổng kích thước phần content + padding + border:
+			Chiều rộng: 140 + 10 + 10 = 160px
+			Chiều cao: 140 + 10 + 10 = 160px
+		Margin (Lề ngoài)
+			5px bên ngoài viền.
+			Đây là khoảng cách giữa hộp div này với các phần tử khác.
+			Tổng diện tích chiếm chỗ (bao gồm margin):
+			Chiều rộng: 160 + 5 + 5 = 170px
+			Chiều cao: 160 + 5 + 5 = 170px
+
+	- float: định nghĩa vị trí các block
+		left	Phần tử trôi sang bên trái vùng chứa.
+		right	Phần tử trôi sang bên phải vùng chứa.
+		none	Không trôi, giữ nguyên vị trí mặc định (giá trị mặc định).
+		inherit	Kế thừa giá trị float từ phần tử cha.
+		initial	Trả về giá trị mặc định của float.
+
+	- overflow: kiểm soát kích thước dư của ô:
+		visible	Mặc định – Nội dung tràn ra ngoài vẫn hiển thị.
+		hidden	Ẩn phần nội dung bị tràn, không hiển thị thanh cuộn.
+		scroll	Ẩn phần tràn nhưng luôn hiển thị thanh cuộn (ngang & dọc).
+		auto	Tự động hiển thị thanh cuộn khi cần. Bao bọc các nội dung infinite
+		inherit	Kế thừa giá trị từ phần tử cha.
+		(overflow-x / overflow-y)	Kiểm soát riêng tràn theo chiều ngang hoặc dọc.
+
+	- background-image: url("duong_dan_hinh_anh.jpg"); background cho thẻ div
+		Phụ trợ cho thuộc tính này
+		background-repeat	Lặp lại hình nền (repeat, no-repeat, repeat-x, repeat-y)
+		background-position	Vị trí hình nền (center, top left, 50% 50%, v.v.)
+		background-size	Kích thước hình nền (cover, contain, 100px 200px)
+		background-attachment	Cố định hình nền khi cuộn (scroll, fixed)
