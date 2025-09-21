@@ -200,3 +200,6 @@ Tuần 4: CSS
 
 	Định dạng tất cả các thẻ: *{...}  
 	Thêm từ khóa !important thì sẽ override tất cả bất kể level
+
+Tuần 5: 1 số thuộc tính của CSS:
+	text-align: right/left(default)/center/justify
