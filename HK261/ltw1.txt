@@ -266,7 +266,7 @@ Tuần 5: 1 số thuộc tính của CSS:
 			Giá trị: top/middle/bottom
 
 
-	- Box model:
+	- Box model định dạng 1 vùng nội dung:
 		Inline elements:
 			<span> → bọc nội dung để style hoặc JS, không có ý nghĩa ngữ nghĩa.
 			<b> → in đậm hình thức, không thêm ý nghĩa.
@@ -329,3 +329,101 @@ Tuần 5: 1 số thuộc tính của CSS:
 		background-position	Vị trí hình nền (center, top left, 50% 50%, v.v.)
 		background-size	Kích thước hình nền (cover, contain, 100px 200px)
 		background-attachment	Cố định hình nền khi cuộn (scroll, fixed)
+
+- Tuần 6 CSS Layout:
+		+---------------------------------------------------------------+
+		|                           MARGIN                              |
+		|   +-------------------------------------------------------+   |
+		|   |                       BORDER                          |   |
+		|   |   +-----------------------------------------------+   |   |
+		|   |   |                   PADDING                     |   |   |
+		|   |   |   +---------------------------------------+   |   |   |
+		|   |   |   |               CONTENT                 |   |   |   |
+		|   |   |   +---------------------------------------+   |   |   |
+		|   |   +-----------------------------------------------+   |   |
+		|   +-------------------------------------------------------+   |
+		+---------------------------------------------------------------+
+
+		<----------------------- ELEMENT WIDTH -------------------------->
+		(measured edge-to-edge including margin, border, and padding)
+
+	- CSS:
+		display: none (ẩn hoàn toàn, trong khi visibility:hidden là ẩn text, giữ độ rộng), block, inline : dùng để override thuộc tính của 1 thẻ
+		margin: <top and bottom margin> <left and right margin>
+		min/max-width/height: chiều rộng/cao tối đa/tối thiểu
+		position: static (default) | relative (di chuyển bằng top+left dựa trên vị trí của chính nó (tức là relatively compared to origin) | fixed (di chuyển bằng top+left dựa trên vị trí của màn hình (vị trí luôn ở đó bất kể scroll đi đâu) | absolute (di chuyển bằng top+left dựa trên vị trí của origin (vd cùng 1 class thì là cái đầu tiên);
+			#box1 {
+				max-width: 200px
+				width : 100px (chiều ngang 100px)
+				margin: 0 auto (kcach tới top và bot là 0px, trái phải thì auto căn giữa)
+			}
+			.box {
+			  position: relative;
+			  top: 10px;   /* dịch xuống 10px */
+			  left: 20px;  /* dịch sang phải 20px */
+			}
+
+			Float:
+				📌 Ví dụ 1: float: left
+				text
+				+---------------------------------------------------+
+				| [IMG]   Lorem ipsum dolor sit amet, consectetur   |
+				| [IMG]   adipiscing elit. Text sẽ "wrap" xung quanh|
+				| [IMG]   hình ảnh được float sang bên trái.        |
+				+---------------------------------------------------+
+				👉 Ở đây, hình ảnh [IMG] được đẩy sang trái, còn text sẽ bao quanh bên phải.
+
+				📌 Ví dụ 2: float: right
+				text
+				+---------------------------------------------------+
+				|   Lorem ipsum dolor sit amet, consectetur [IMG]   |
+				|   adipiscing elit. Text sẽ "wrap" xung quanh [IMG]|
+				|   hình ảnh được float sang bên phải.        [IMG] |
+				+---------------------------------------------------+
+				👉 Hình ảnh [IMG] được đẩy sang phải, text bao quanh bên trái.
+
+				📌 Ví dụ 3: Clear float (clear: both)
+				text
+				+---------------------------------------------------+
+				| [IMG]   Text bao quanh hình ảnh bên trái          |
+				| [IMG]   Text bao quanh hình ảnh bên trái          |
+				+---------------------------------------------------+
+				|                   Footer (clear: both)            |
+				+---------------------------------------------------+
+				👉 Nếu không dùng clear, footer sẽ bị “trôi” lên cạnh hình. Với clear: both, footer sẽ xuống hẳn dưới, không bị ảnh hưởng bởi float.
+
+			overflow.
+
+				📌 overflow: visible (mặc định)
+				Nội dung tràn ra ngoài vẫn hiển thị:
+
+				+-------------------+
+				|   CONTENT CONTENT CONTENT CONTENT CONTENT
+				|   (tràn ra ngoài box, vẫn thấy)  >>>>>>>>
+				+-------------------+
+				📌 overflow: hidden
+				Nội dung tràn ra ngoài sẽ bị cắt, không thấy nữa:
+
+				+-------------------+
+				|   CONTENT CONTENT C
+				|   (phần dư bị ẩn) 
+				+-------------------+
+				📌 overflow: scroll
+				Luôn có thanh cuộn (ngang/dọc) để xem phần tràn:
+
+				+-------------------+
+				|   CONTENT CONTENT |
+				|   CONTENT CONTENT |
+				+-------------------+
+						↑↓ scrollbar
+				📌 overflow: auto
+				Chỉ hiện thanh cuộn khi thật sự cần (nếu nội dung tràn):
+
+				+-------------------+
+				|   CONTENT CONTENT |
+				|   (nếu tràn thì có
+				|   scrollbar, nếu   |
+				|   không thì không) |
+				+-------------------+
+		Để css trỏ vào đúng thứ tự mình muốn thì sử dụng:
+			.box:nth-child(3n) -> trỏ vào class box thứ 3
