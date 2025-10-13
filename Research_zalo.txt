@@ -341,3 +341,73 @@ https://github.com/Tampermonkey/tampermonkey/issues/2384
 			return decompressed.decode('utf-8')
 		except Exception as e:
 			return f"❌ Decrypt failed: {e}"
+
+- Zapy vô tri mới (xấu): C:\Users\Admin\AppData\Roaming\ZaloData\media\2131430020829351610\sticker\61900
+  Zapy vô tri cũ:  C:\Users\Admin\AppData\Roaming\ZaloData\media\2131430020829351610\sticker\12292
+	Chép đè sticker cũ qua mới (useless):
+	$src  = "C:\Users\Admin\AppData\Roaming\ZaloData\media\2131430020829351610\sticker\12292"
+	$dest = "C:\Users\Admin\AppData\Roaming\ZaloData\media\2131430020829351610\sticker\61900"
+
+	$srcDirs  = Get-ChildItem -Path $src  -Directory | Sort-Object Name
+	$destDirs = Get-ChildItem -Path $dest -Directory | Sort-Object Name
+
+	for ($i = 0; $i -lt $srcDirs.Count; $i++) {
+		$s = $srcDirs[$i].FullName
+		$d = $destDirs[$i].FullName
+
+		# Lấy file duy nhất trong dest
+		$destFile = Get-ChildItem -Path $d -File | Select-Object -First 1
+		if ($null -eq $destFile) {
+			Write-Host "Không tìm thấy file trong $d, bỏ qua..."
+			continue
+		}
+
+		$targetPath = $destFile.FullName
+
+		Write-Host "Copy từ $s -> $targetPath"
+
+		# Copy tất cả file trong src, ghi đè lên file đích
+		Get-ChildItem -Path $s -File | ForEach-Object {
+			Copy-Item -Path $_.FullName -Destination $targetPath -Force
+		}
+	}
+
+
+- Chép và convert sticker qua telegram:
+# 1. Định nghĩa các biến cần thiết
+# Thay thế đường dẫn này bằng thư mục gốc chứa các folder sticker nhỏ
+$zaloStickerPath = "C:\Users\Admin\AppData\Roaming\ZaloData\media\2131430020829351610\sticker\61900" 
+
+# Thư mục đích để lưu các file PNG đã resize (thư mục hiện tại)
+$outputPath = ".\Sticker_Output" 
+
+# Đảm bảo thư mục output tồn tại
+if (-not (Test-Path $outputPath)) {
+    New-Item -Path $outputPath -ItemType Directory | Out-Null
+}
+
+# 2. Tìm kiếm đệ quy tất cả file PNG và Resize bằng FFmpeg
+Get-ChildItem -Path $zaloStickerPath -Recurse -File -Filter "*.png" | ForEach-Object {
+    
+    # Lấy tên file gốc (ví dụ: b6ccb1b464756cf227ccad8aa02b53d6.png)
+    $fileName = $_.Name
+    
+    # Tạo đường dẫn file đầu ra hoàn chỉnh
+    $outputFile = Join-Path -Path $outputPath -ChildPath $fileName
+    
+    # Lệnh FFmpeg để Resize
+    # scale=512:512 ép kích thước thành 512x512
+    # -y là ghi đè nếu file đã tồn tại
+    
+    Write-Host "Đang xử lý: $($_.FullName)"
+    
+    ffmpeg -i "$($_.FullName)" -vf scale=512:512 -y "$outputFile"
+    
+    Write-Host "  -> Đã lưu vào: $outputFile"
+}
+
+Write-Host "---"
+Write-Host "Hoàn thành. Tất cả các file PNG đã được resize về 512x512 và lưu trong thư mục: $outputPath"
+
+https://ezgif.com/webp-to-webm : convert qua webm cho animated sticker
+https://products.aspose.app/video/change-speed/webm : tăng speed đáp ứng < 3s

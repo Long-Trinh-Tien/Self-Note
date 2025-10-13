@@ -1,0 +1,50 @@
+- Bind usb bằng kernel mới:
+Copy từ máy 251:
+	scp -J root@ubunu2 long.trinh-tien@192.168.203.169:/prj/soc-sw/local/work/long.trinh-tien/test/WSL2-Linux-Kernel/arch/x86/boot/bzImage .
+
+Build Kernel WSL:
+	make KCONFIG_CONFIG=Microsoft/config-wsl menuconfig
+	CONFIG_USBIP_CORE=y
+	CONFIG_USBIP_VHCI_HCD=y
+	https://www.reddit.com/r/debian/comments/1cgrefu/compiling_linux_688_libbpf_failed_to_find_btf_elf/
+	CONFIG_BPF=n
+	CONFIG_SCHED_CLASS_EXT=n
+	CONFIG_BPF_SYSCALL=n
+	CONFIG_BPF_JIT=n
+	CONFIG_BPF_JIT_ALWAYS_ON=n
+	CONFIG_BPF_JIT_DEFAULT_ON=n
+	CONFIG_PAHOLE_HAS_BTF_TAG=n
+	CONFIG_DEBUG_INFO_BTF=n
+
+	CONFIG_USB=y
+	CONFIG_USB_STORAGE=y
+	
+	IP6_NF_IPTABLES=y
+	IP_NF_IPTABLES=y
+
+Bind USB:
+	usbipd list
+	usbipd bind --busid 1-3
+	usbipd attach --wsl --busid 1-3
+
+- Tạo hyper v switch và kết nối wsl qua bridge đó:
+	https://blog.petrousoft.com/how-to-brigde-windows-subsystem-for-linux-0dc55a406a3b
+
+- Cài hyper v openwrt cho nhiều nic:
+	https://downloads.openwrt.org/releases/
+	Chú ý:
+		Hyper V gen 1:generic-ext4-combined.img.gz
+		Hyper V gen 2:generic-ext4-combined-efi.img.gz (cần config thêm)
+	qemu-img convert -f raw -O vhdx -o subformat=dynamic openwrt-xx.img openwrt.vhdx
+	Mở Hyper‑V Manager → New → Virtual Machine. Chọn Generation 2. RAM: 256–512 MB là đủ.
+	Ổ cứng: chọn Use an existing virtual hard disk → trỏ tới openwrt.vhdx.
+	Tạo 2 Virtual Switch trong Hyper‑V:
+		vSwitch-WAN (External, gắn card thật để ra Internet).
+		vSwitch-LAN (Internal hoặc External khác để làm LAN).
+
+	Tắt Secure Boot cho VM khi xài gen2:
+		Mở Hyper‑V Manager → chuột phải vào VM → Settings.
+		Vào mục Security.
+		Bỏ tick Enable Secure Boot.
+		Nhấn OK, rồi khởi động lại VM.
+		Hoặc: Set-VMFirmware -VMName "OpenWrt" -EnableSecureBoot Off
