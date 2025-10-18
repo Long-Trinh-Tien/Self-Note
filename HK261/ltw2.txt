@@ -47,3 +47,62 @@ Tuần 5: 5.1 Mảng
 	if( isset( $_POST["name"] ) == true ) {
 		$var = $_POST["name"];
 	}
+
+- Bật hiển thị lỗi PHP (debug)
+
+	Thêm dòng sau vào đầu file index.php:
+
+	<?php
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+	?>
+
+- Hiển thị tiếng việt cần phải ép set charset là UTF-8:
+	function LayDuLieu($sql) {
+		global $DBHost, $DBLoginname, $DBPassword, $DBName;
+		$data = array();
+		
+		#Step 1: Connect to database server
+		$ketnoi = mysqli_connect($DBHost, $DBLoginname, $DBPassword, $DBName);
+
+		#Quan trọng: set charset UTF-8
+		mysqli_set_charset($ketnoi, "utf8mb4");
+
+		#Step 2: enter query
+
+		#Step 3: execute query
+		$datapointer = mysqli_query($ketnoi, $sql);
+
+		#Step 4: handle data
+		while($dong = mysqli_fetch_assoc($datapointer)) {
+			$data[] = $dong;
+		}
+
+		#Step 5: close connection
+		mysqli_close($ketnoi);
+
+		return $data;
+	}
+
+	function RunOtherSql($sql) {
+		global $DBHost, $DBLoginname, $DBPassword, $DBName;
+		
+		#Step 1: Connect to database server
+		$ketnoi = mysqli_connect($DBHost, $DBLoginname, $DBPassword, $DBName);
+
+		#Quan trọng: set charset UTF-8
+		mysqli_set_charset($ketnoi, "utf8mb4");
+
+		#Step 2: enter query
+
+		#Step 3: execute query
+		$datapointer = mysqli_query($ketnoi, $sql);
+
+		#Step 4: handle data
+
+		#Step 5: close connection
+		mysqli_close($ketnoi);
+
+		return $datapointer;
+	}
