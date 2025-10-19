@@ -427,3 +427,161 @@ Tuần 5: 1 số thuộc tính của CSS:
 				+-------------------+
 		Để css trỏ vào đúng thứ tự mình muốn thì sử dụng:
 			.box:nth-child(3n) -> trỏ vào class box thứ 3
+
+- Tuần 7
+	Tóm tắt kiến thức cơ bản Bootstrap
+
+	- **Khái niệm**  
+	  - Bootstrap là framework CSS/JS giúp xây dựng giao diện web nhanh, responsive.  
+	  - Cung cấp sẵn grid system, component (navbar, button, card…), và utility class.  
+
+	- **Container**  
+	  - `.container`: khung có chiều rộng cố định theo breakpoint, căn giữa nội dung.  
+	  - `.container-fluid`: full width 100% màn hình.  
+
+	- **Grid System (12 cột)**  
+	  - Chia layout thành 12 cột.  
+	  - Class cột: `.col-`, `.col-sm-`, `.col-md-`, `.col-lg-`, `.col-xl-`, `.col-xxl-`.  
+	  - Breakpoints:  
+		- `col-` (<576px)  
+		- `col-sm-` (≥576px)  
+		- `col-md-` (≥768px)  
+		- `col-lg-` (≥992px)  
+		- `col-xl-` (≥1200px)  
+		- `col-xxl-` (≥1400px)  
+	  - `.row`: chứa các `.col-`, dùng flexbox để căn chỉnh.  
+
+	- **Component phổ biến**  
+	  - **Navbar**: thanh điều hướng, responsive, hỗ trợ collapse/hamburger menu.  
+	  - **Button**: `.btn`, `.btn-primary`, `.btn-outline-*`.  
+	  - **Card**: khối nội dung có header, body, footer.  
+	  - **Form**: input, select, checkbox, radio với style sẵn.  
+	  - **Modal**: popup hộp thoại.  
+	  - **Alert**: thông báo màu sắc theo trạng thái.  
+	  - **Dropdown**: menu xổ xuống.  
+
+	- **Utility classes** (class tiện ích)  
+	  - **Spacing**: `m-0`, `mt-3`, `p-2` (margin/padding).  
+	  - **Text**: `text-center`, `text-uppercase`, `fw-bold`.  
+	  - **Display**: `d-none`, `d-block`, `d-flex`.  
+	  - **Colors**: `bg-primary`, `text-danger`, `border-success`.  
+	  - **Flexbox/Grid helpers**: `justify-content-center`, `align-items-start`.  
+
+	- **Responsive helpers**  
+	  - Hiển thị/ẩn theo màn hình: `d-none d-md-block` (ẩn trên mobile, hiện trên desktop).  
+	  - Căn chỉnh layout khác nhau theo breakpoint.  
+
+	- **JavaScript components** (Bootstrap 4/5)  
+	  - Modal, Tooltip, Carousel, Collapse, Dropdown.  
+	  - Bootstrap 5 không cần jQuery, chỉ dùng JS thuần.  
+
+	---
+
+	## ✅ Kết luận
+	- **Container → Row → Col** là xương sống của layout.  
+	- **Component** giúp dựng UI nhanh.  
+	- **Utility class** giúp chỉnh sửa nhanh mà không cần CSS riêng.  
+	- **Responsive** là điểm mạnh: website tự thích ứng mọi màn hình.  
+
+- Tuần 9: javascript
+	## 📌 JavaScript cơ bản – Note nhanh
+
+	### 1. Cú pháp chèn JavaScript vào HTML
+	- Dùng thẻ `<script>` trong file HTML.  
+	- Có thể viết trực tiếp hoặc import file `.js`.  
+
+	Ví dụ:
+	```html
+	<!-- Viết trực tiếp -->
+	<script>
+	  console.log("Hello JS");
+	</script>
+
+	<!-- Import file ngoài -->
+	<script src="app.js"></script>
+	```
+
+	---
+
+	### 2. Object trong JavaScript
+	- **Khai báo object**:
+	  ```js
+	  let person = {
+		name: "Long",
+		age: 25,
+		city: "HCM"
+	  };
+	  ```
+	- **Truy cập thuộc tính**:
+	  ```js
+	  console.log(person.name);   // dot notation
+	  console.log(person["age"]); // bracket notation
+	  ```
+	- **Thêm / sửa / xóa**:
+	  ```js
+	  person.job = "Developer";   // thêm
+	  person.age = 26;            // sửa
+	  delete person.city;         // xóa
+	  ```
+	- **Lặp qua object**:
+	  ```js
+	  for (let key in person) {
+		console.log(key, person[key]);
+	  }
+	  ```
+
+	---
+
+	### 3. Vòng lặp `forEach`
+	- Dùng cho **array** (mảng).  
+	- Cú pháp:
+	  ```js
+	  let numbers = [1, 2, 3];
+	  numbers.forEach(function(num, index) {
+		console.log(index, num);
+	  });
+	  ```
+	- Viết gọn với arrow function:
+	  ```js
+	  numbers.forEach(num => console.log(num));
+	  ```
+
+	---
+
+	### 4. Dấu so sánh `===`
+	- `===` là **so sánh nghiêm ngặt**: so sánh cả **giá trị** và **kiểu dữ liệu**.  
+	- Khác với `==` (chỉ so sánh giá trị, có ép kiểu).  
+
+	Ví dụ:
+	```js
+	console.log(5 == "5");   // true (ép kiểu)
+	console.log(5 === "5");  // false (khác kiểu: number vs string)
+	console.log(5 === 5);    // true
+	```
+
+	---
+
+	### 5. Events (Sự kiện)
+	- JS có thể gắn sự kiện cho phần tử HTML.  
+	- Cách 1: inline trong HTML
+	  ```html
+	  <button onclick="alert('Clicked!')">Click me</button>
+	  ```
+	- Cách 2: gắn bằng JS (hoặc ghi tên hàm rồi tạo hàm trong javascript)
+	  ```html
+	  <button id="btn">Click me</button>
+	  <script>
+		document.getElementById("btn").addEventListener("click", function() {
+		  alert("Button clicked!");
+		});
+	  </script>
+	  ```
+
+	---
+
+	## ✅ Tóm tắt
+	- **`<script>`**: chèn JS vào HTML.  
+	- **Object**: lưu trữ dữ liệu dạng key–value.  
+	- **`forEach`**: duyệt mảng.  
+	- **`===`**: so sánh nghiêm ngặt (giá trị + kiểu).  
+	- **Events**: xử lý tương tác người dùng (click, hover, keypress…).  

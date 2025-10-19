@@ -1,0 +1,4 @@
+Giả sử local có folder Christmas
+	Xoá file (list name truyền vào):rclone delete archive:/MUSIC-YT-TMY -P --files-from <(rclone lsf "Christmas")
+	Kiểm tra file có trong list không: rclone check "Christmas" archive:/MUSIC-YT-TMY --one-way --size-only
+	Copy từ local lên: rclone copy Christmas archive:/MUSIC-YT-TMY/Christmas -P
