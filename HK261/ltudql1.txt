@@ -62,3 +62,5 @@ Tuần 8:
 	End Module
 
 Sau đó vào nuget tải oledatabase về, lúc này khi xài chỉ cần XL_DuLieu.DocDuLieu và XL_DuLieu.GhiDuLieu
+
+Để tạo UI theo khung thì sử dụng ToolBox Panel gồm 3 loại, thường sẽ sử dụng table layout panel và panel. Các bảng lớn thì để vào table layout, xong sử dụng Dock -> Fill để chiếm trọn màn hình. Với Panel thì cho nó tràn ra bằng thuộc tính Collumn Span/Row Span (click vào panel chứ không phải table layout). Để nó nằm giữa thì chọn Anchor -> tắt Top, Left đi

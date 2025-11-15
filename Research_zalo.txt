@@ -1,3 +1,10 @@
+- Xử lý khi update ver mới:
+	npm install -g asar
+	asar extract app.asar ./app
+	Xóa file app.asar, tạo app.asar mới với nội dung: echo "{}"
+
+
+
 - Với web thì dò websocket -> hàm open websocket -> ra listener message -> dò ra _onRawData -> _onData để xử lý message sau khi đã decrypt và hàm decrypt -> đưa vào chatgpt để generate ra code decrypt với key được tạo ra ở mỗi session
 
 - Với zalo window app thì nó đang được build bằng electron -> web-based app -> unpackaged ra đặt tên folder là app, move app.asar qua chỗ khác, tạo 1 file app.asar khác với nội dung là :echo "{}" -> để nó fallback về folder app (do trong logic của Zalo.exe sẽ check xem app.asar có hay không) -> sau đó xài JS-Beautify for VS Code extension (ấn F1 -> beautify) để generate ra code dễ đọc hơn
