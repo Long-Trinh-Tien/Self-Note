@@ -1,4 +1,13 @@
 Giả sử local có folder Christmas
 	Xoá file (list name truyền vào):rclone delete archive:/MUSIC-YT-TMY -P --files-from <(rclone lsf "Christmas")
-	Kiểm tra file có trong list không: rclone check "Christmas" archive:/MUSIC-YT-TMY --one-way --size-only
-	Copy từ local lên: rclone copy Christmas archive:/MUSIC-YT-TMY/Christmas -P
+	Kiểm tra file có trong list không: rclone copy "Nhạc/" 'archive:/MUSIC-YT-TMY/Nhac' --dry-run
+	Copy từ local lên: rclone copy "Old song usuk" 'archive:/MUSIC-YT-TMY/Old_song_usuk' --include "*.mp3" -P
+		list command: 
+			rclone copy "Old song usuk" 'archive:/MUSIC-YT-TMY/Old_song_usuk' --include "*.mp3" -P
+			rclone copy "Nhạc" 'archive:/MUSIC-YT-TMY/Nhac' --include "*.mp3" -P
+			rclone copy "Christmas" 'archive:/MUSIC-YT-TMY/Christmas' --include "*.mp3" -P
+			rclone copy "Relax không lời" 'archive:/MUSIC-YT-TMY/Relax không lời' --include "*.mp3" -P
+			rclone copy "Remix" 'archive:/MUSIC-YT-TMY/Remix' --include "*.mp3" -P
+Sử dụng ia:
+	ia configure để đăng nhập
+	Move toàn bộ file thư mục này sang thư mục khác: ia ls MUSIC-YT-TMY --glob="Nhạc/*" | while IFS= read -r f; do   ia mv "MUSIC-YT-TMY/$f" "MUSIC-YT-TMY/${f/Nhạc/Nhac_no-use}"; done

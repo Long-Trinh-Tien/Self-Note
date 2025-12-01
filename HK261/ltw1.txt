@@ -585,3 +585,258 @@ Tuần 5: 1 số thuộc tính của CSS:
 	- **`forEach`**: duyệt mảng.  
 	- **`===`**: so sánh nghiêm ngặt (giá trị + kiểu).  
 	- **Events**: xử lý tương tác người dùng (click, hover, keypress…).  
+
+- Tuần 10: DOM
+	- getElementById("id") chỉ chọn một phần tử duy nhất theo id.
+	- querySelector("css-selector") chọn phần tử đầu tiên khớp với bất kỳ CSS selector nào (id, class, tag, attribute…).
+	- Khi làm việc với DOM, các thuộc tính phổ biến gồm: innerText, innerHTML, value, style, classList, src, href, children, parentNode…
+	- getElementsByClassName("class") → trả về HTMLCollection gồm tất cả phần tử có class đó (live collection, tự động cập nhật khi DOM thay đổi).
+	- querySelectorAll("selector") → trả về NodeList gồm tất cả phần tử khớp với CSS selector (không chỉ class, mà cả id, tag, selector phức tạp). Đây là static collection, không tự cập nhật khi DOM thay đổi.
+
+	### 📌 Ghi chú: `onclick` vs `addEventListener('click', ...)`
+
+	- **`onclick`**
+	  - Gán trực tiếp hàm vào thuộc tính sự kiện (`element.onclick = fn`).
+	  - Chỉ giữ được **1 hàm duy nhất** – gán mới sẽ **ghi đè** cái cũ.
+	  - Muốn bỏ thì gán `element.onclick = null`.
+	  - Đơn giản, nhanh, nhưng hạn chế.
+
+	- **`addEventListener('click', fn)`**
+	  - Đăng ký **nhiều hàm cùng lúc** cho cùng một sự kiện.
+	  - Có thể gỡ bỏ riêng từng hàm bằng `removeEventListener`.
+	  - Hỗ trợ cả **sự kiện tùy biến** và cho phép chọn **bubbling/capturing phase**.
+	  - Linh hoạt, phù hợp khi code phức tạp.
+
+	👉 **Tóm lại:**  
+	- Dùng `onclick` khi chỉ cần một handler đơn giản.  
+	- Dùng `addEventListener` khi cần nhiều handler, quản lý tốt hơn, hoặc xử lý nâng cao.  
+
+	- promt/confirm : lấy input user
+
+	### 📌 Ghi chú: `innerText` vs `innerHTML`
+
+	- **`innerText`**
+	  - Lấy hoặc gán **chỉ phần văn bản hiển thị** (text content) bên trong phần tử.
+	  - Bỏ qua thẻ HTML con, chỉ lấy chữ mà người dùng nhìn thấy.
+	  - Tự động cập nhật theo CSS (ví dụ `display:none` thì text ẩn sẽ không được lấy).
+	  - Dùng khi bạn chỉ cần xử lý **nội dung chữ** thuần túy, không quan tâm đến markup.
+
+	- **`innerHTML`**
+	  - Lấy hoặc gán **toàn bộ nội dung HTML** bên trong phần tử.
+	  - Bao gồm cả thẻ con, thuộc tính, markup.
+	  - Khi gán, chuỗi sẽ được parse thành HTML thật → có thể chèn thêm thẻ, nút, hình ảnh…
+	  - Dùng khi bạn cần **thao tác với cấu trúc HTML** (ví dụ thêm `<span>`, `<b>`, `<div>`).
+
+	👉 **Tóm lại:**  
+	- Dùng `innerText` khi chỉ cần chữ.  
+	- Dùng `innerHTML` khi cần cả chữ lẫn thẻ HTML.  
+
+	### 📌 Ghi chú: `onmouseover` & `onmouseout` với nhiều thẻ `<img>`
+
+	- **`onmouseover`**: chạy khi chuột đi vào phần tử.  
+	- **`onmouseout`**: chạy khi chuột rời khỏi phần tử.  
+	- Dùng `querySelectorAll("img")` để lấy tất cả ảnh, rồi gắn sự kiện cho từng ảnh.  
+	- Khi hover: đổi `src` từ `xxx.png` → `xxx-active.png`.  
+	- Khi rời: đổi ngược lại `xxx-active.png` → `xxx.png`.
+
+	```js
+	document.querySelectorAll("img").forEach(img => {
+	  img.onmouseover = () => {
+		img.src = img.src.replace(".png", "-active.png");
+	  };
+	  img.onmouseout = () => {
+		img.src = img.src.replace("-active.png", ".png");
+	  };
+	});
+	```
+
+	👉 Ngắn gọn: hover → thêm `-active`, rời → trả về `.png`.
+
+	- Tuần 11
+	🧩 Ghi chú: Form Validation trong HTML + CSS + JS
+		1. HTML5 Form Validation
+
+		Các input có thể tự động kiểm tra hợp lệ nhờ các attribute:
+
+		required → bắt buộc nhập.
+
+		type="email", type="number" → tự động kiểm tra định dạng.
+
+		min, max, maxlength, pattern → kiểm soát giá trị nhập vào.
+
+		Khi form được submit, trình duyệt sẽ tự kiểm tra và ngăn gửi nếu có lỗi.
+
+		2. pattern Attribute
+
+		Dùng để xác định biểu thức chính quy (RegExp) cho giá trị input.
+		Ví dụ:
+
+		<input type="text" pattern="[A-Za-z0-9]{6,}" title="Tối thiểu 6 ký tự chữ hoặc số">
+
+
+		Khi người dùng nhập sai, form sẽ hiển thị lỗi mặc định hoặc bạn có thể tùy chỉnh.
+
+		3. setCustomValidity()
+
+		Dùng trong JavaScript để tùy chỉnh thông báo lỗi cho một input.
+
+		Ví dụ:
+
+		const input = document.getElementById("username");
+		input.addEventListener("input", function() {
+		  if (this.value.length < 6) {
+			this.setCustomValidity("Tên người dùng phải có ít nhất 6 ký tự");
+		  } else {
+			this.setCustomValidity(""); // reset lỗi
+		  }
+		});
+
+
+		Hàm này chỉ có tác dụng nếu field đó nằm trong form có validation.
+
+		4. CSS Validation Indicator (Hình bạn gửi)
+
+		Đoạn CSS trong hình hiển thị biểu tượng khi input hợp lệ hoặc không hợp lệ:
+
+		input:required:invalid, input:focus:invalid {
+		  background-image: url(images/invalid.png);
+		  background-position: right top;
+		  background-repeat: no-repeat;
+		}
+
+		input:required:valid, input:focus:valid {
+		  background-image: url(images/valid.png);
+		  background-position: right top;
+		  background-repeat: no-repeat;
+		}
+
+
+		📌 Giải thích:
+
+		:invalid và :valid là pseudo-class của CSS, tự động được thêm vào khi kiểm tra form.
+
+		Khi người dùng nhập đúng định dạng → hiển thị valid.png.
+
+		Khi sai → hiển thị invalid.png.
+
+		background-position: right top; giúp icon nằm góc phải của ô nhập.
+
+	- Tuần 12:
+	🧩 Tổng quan Handlebars.js
+
+	Handlebars.js là template engine giúp tách riêng logic hiển thị (view) ra khỏi logic xử lý (JS).
+	Nó dùng cú pháp dạng {{}} để chèn dữ liệu, vòng lặp, điều kiện… thay vì viết trực tiếp JS trong HTML.
+
+	⚙️ Cú pháp cơ bản & cách sử dụng
+		1. Tạo template
+		<script id="user-template" type="text/x-handlebars-template">
+		  <h2>{{name}}</h2>
+		  <p>Age: {{age}}</p>
+		</script>
+
+		2.1 Compile & render bằng javascript thuần
+			const source = document.getElementById("user-template").innerHTML;
+			const template = Handlebars.compile(source);
+			const html = template({ name: "Tèo", age: 25 });
+			document.body.innerHTML = html;
+		2.2 Bằng jQuery
+			Cách Xử lý sử dụng jQuery và ID
+			Lấy Template: Sử dụng jQuery ($) để lấy nội dung của <script> tag dựa trên ID ($('#demo-template')).
+
+			var source = $('#demo-template').html();
+			$('#demo-template') chọn phần tử.
+
+			.html() lấy nội dung bên trong (chuỗi HTML/text).
+
+			Dữ liệu Context: Dữ liệu context được định nghĩa trực tiếp trong code JavaScript.
+
+			var context = {
+				name: '<b style="color:blue;">Alice</b>',
+				location: 'New York'
+			};
+			Lưu ý: Giá trị name chứa HTML thô, điều này có thể dẫn đến lỗ hổng XSS (Cross-Site Scripting) nếu không dùng helper {{{...}}} trong template.
+
+			Chèn Kết quả vào DOM: Sử dụng jQuery để chọn phần tử mục tiêu ($('#demo')) và dùng .html() để chèn HTML đã render vào đó.
+
+			$(target).html(template(context));
+
+	🧱 Escape HTML
+
+		Mặc định Handlebars sẽ escape HTML để tránh XSS.
+
+		{{message}}    → tự động escape  
+		{{{message}}}  → không escape (hiển thị raw HTML)
+
+
+		Ví dụ:
+
+		{ message: "<b>Hello</b>" }
+
+
+		{{message}} → &lt;b&gt;Hello&lt;/b&gt;
+
+		{{{message}}} → Hello (in đậm)
+
+	🔀 Cấu trúc điều kiện – if / else
+		{{#if isAdmin}}
+		  <p>Welcome admin!</p>
+		{{else}}
+		  <p>User mode.</p>
+		{{/if}}
+
+
+	👉 Tại sao không dùng if của JavaScript?
+
+		Handlebars không cho nhúng JS trực tiếp → giúp view tách biệt khỏi logic, tránh lỗi và bảo mật hơn.
+
+		Chỉ được phép sử dụng helper (if, each, with, custom helper...) do Handlebars cung cấp.
+
+	🔁 Lặp qua danh sách – each
+		<ul>
+		  {{#each users}}
+			<li>{{@index}}. {{this.name}} - {{this.age}}</li>
+		  {{/each}}
+		</ul>
+
+
+		{{this}}: phần tử hiện tại
+
+		{{@index}}: chỉ số (bắt đầu từ 0)
+
+		{{@first}}, {{@last}}: cờ boolean trong vòng lặp
+
+		⬆️ Lấy giá trị cùng cấp / cha
+
+		Truy cập level cha: dùng ../
+
+		{{#each users}}
+		  <p>{{this.name}} (Group: {{../groupName}})</p>
+		{{/each}}
+
+
+		Truy cập cùng cấp: chỉ cần gọi tên key bình thường trong cùng context.
+
+	📦 with – thu hẹp phạm vi
+		{{#with user}}
+		  <h3>{{name}}</h3>
+		  <p>{{email}}</p>
+		{{/with}}
+
+
+		→ Giúp tránh phải viết user.name, user.email nhiều lần.
+
+	⚡ Ví dụ tổng hợp
+		<h1>{{title}}</h1>
+
+		{{#with profile}}
+		  <h2>{{name}}</h2>
+		  <p>{{{bio}}}</p>
+		{{/with}}
+
+		<ul>
+		  {{#each posts}}
+			<li>{{@index}} - {{this.title}} (by {{../profile.name}})</li>
+		  {{else}}
+			<li>No posts</li>
+		  {{/each}}
+		</ul>
