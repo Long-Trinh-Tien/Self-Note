@@ -12,3 +12,7 @@ Giả sử local có folder Christmas
 Sử dụng ia:
 	ia configure để đăng nhập
 	Move toàn bộ file thư mục này sang thư mục khác: ia ls MUSIC-YT-TMY --glob="Nhạc/*" | while IFS= read -r f; do   ia mv "MUSIC-YT-TMY/$f" "MUSIC-YT-TMY/${f/Nhạc/Nhac_no-use}"; done
+	Kiểm tra file có trong list không: rclone check "Christmas" archive:/MUSIC-YT-TMY --one-way --size-only
+	Copy từ local lên: rclone copy Christmas archive:/MUSIC-YT-TMY/Christmas -P
+
+Up 1 playlist mới: rclone move . archive:/SGBB-KARMA -P

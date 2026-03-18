@@ -840,3 +840,5 @@ Tuần 5: 1 số thuộc tính của CSS:
 			<li>No posts</li>
 		  {{/each}}
 		</ul>
+
+- ms-auto : căn về hướng start (trái qua phải), me-auto: căn từ phải qua trái
