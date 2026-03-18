@@ -1,0 +1,3 @@
+Tắt active break points
+Vào application -> bypass for network
+Vào web truy cập phim để get link và download bằng N_m3u8DL_RE
