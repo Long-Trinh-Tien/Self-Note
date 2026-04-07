@@ -1,0 +1,1 @@
+powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File ".\winnfsd-gui-system-tray-support.ps1"
